@@ -36,8 +36,8 @@ export function GuestLanding() {
                         transition={{ delay: 0.2 }}
                         className="max-w-2xl mx-auto text-xl text-muted-foreground mb-12 leading-relaxed"
                     >
-                        The professional infrastructure for elite competitive gaming.
-                        Deploy tournaments, track real-time performance, and scale your gaming organization to the global stage.
+                        The world's most advanced competitive orchestration platform.
+                        Precision brackets, real-time analytics, and professional-grade infrastructure for organizations that play to lead.
                     </motion.p>
 
                     <motion.div
@@ -48,7 +48,7 @@ export function GuestLanding() {
                     >
                         <Link href="/auth/register">
                             <button className="h-16 px-12 bg-foreground text-background font-black uppercase tracking-widest text-sm rounded-full hover:scale-105 transition-all shadow-2xl flex items-center gap-3">
-                                Join the Elite <ArrowRight className="w-5 h-5" />
+                                START COMPETING <ArrowRight className="w-5 h-5" />
                             </button>
                         </Link>
                         <Link href="/auth/login">

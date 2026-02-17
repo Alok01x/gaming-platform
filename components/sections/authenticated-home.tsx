@@ -23,7 +23,7 @@ export async function AuthenticatedHome() {
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
                         <div>
                             <h2 className="text-4xl md:text-5xl font-black font-heading tracking-tight uppercase mb-4">
-                                Elite <span className="text-primary italic">Live</span> Events
+                                GamerNotFound <span className="text-primary italic">Live</span> Events
                             </h2>
                             <p className="text-muted-foreground max-w-xl">
                                 The most high-stakes competition happens here. Join active tournaments and prove your dominance.

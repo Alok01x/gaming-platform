@@ -79,7 +79,7 @@ export default function CreateTeamPage() {
 
                 <AuthForm
                     title="Form Team"
-                    subtitle="Founder an Elite Organization"
+                    subtitle="Founder a Pro Organization"
                     onSubmit={handleSubmit}
                 >
                     <AuthInput

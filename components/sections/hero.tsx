@@ -66,7 +66,7 @@ export function Hero() {
                 >
                     <TournCard
                         game="VALORANT"
-                        title="Elite Champions Cup"
+                        title="GamerNotFound Pro Series"
                         prize="$50,000"
                         status="OPEN"
                     />

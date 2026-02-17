@@ -25,7 +25,7 @@ export default function LeaderboardPage() {
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
                     <div>
                         <h1 className="text-4xl md:text-6xl font-black font-heading tracking-tight uppercase mb-4">
-                            Global <span className="text-primary italic">Elite</span>
+                            Global <span className="text-primary italic">Top</span>
                         </h1>
                         <p className="text-muted-foreground max-w-xl font-bold uppercase tracking-widest text-[10px] opacity-60">
                             Hall of Commanders • All Platforms • Seasonal Rankings

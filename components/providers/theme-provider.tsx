@@ -16,7 +16,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
     useEffect(() => {
         // Load persisted theme
-        const savedTheme = localStorage.getItem('elite-arena-theme') as Theme;
+        const savedTheme = localStorage.getItem('gamernotfound-theme') as Theme;
         if (savedTheme && ['midnight', 'day', 'golden'].includes(savedTheme)) {
             setThemeState(savedTheme);
             document.documentElement.setAttribute('data-theme', savedTheme);
@@ -26,7 +26,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const setTheme = (newTheme: Theme) => {
         setThemeState(newTheme);
         document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('elite-arena-theme', newTheme);
+        localStorage.setItem('gamernotfound-theme', newTheme);
     };
 
     return (
