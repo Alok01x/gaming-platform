@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Elite Arena Orchestration
+
+## Local Deployment Security
+To ensure a smooth onboarding for new operatives during local development, you must calibrate your Supabase authentication settings:
+
+1.  **Disable Email Confirmation**:
+    - Access your [Supabase Dashboard](https://supabase.com/dashboard).
+    - Navigate to **Authentication** in the left sidebar.
+    - Select **Providers** from the Authentication menu.
+    - Click to expand the **Email** provider section.
+    - Toggle **Confirm email** to **OFF** and click **Save**.
+    - This allows registered emails to log in via their registered password immediately without waiting for an external verification link.
+
+- **Fix for Existing Unconfirmed Users**:
+    - If you registered an email *before* disabling confirmation, that account is still "unconfirmed."
+    - Go to **Authentication > Users**.
+    - Find your email, click the **... (three dots)** actions menu.
+    - Select **Confirm User**.
+    - Alternatively, simply register a **new email** now that the setting is OFF.
 
 ## Getting Started
 
