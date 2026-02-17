@@ -3,7 +3,8 @@ import { notFound } from "next/navigation";
 import { Trophy, Calendar, Users, Shield, ArrowLeft, Zap } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { joinTournament } from "../actions";
+import { joinTournament, startTournament } from "../actions";
+import BracketView from "../components/bracket-view";
 
 interface PageProps {
     params: { id: string };
@@ -25,6 +26,20 @@ export default async function TournamentDetailPage({ params }: PageProps) {
 
     const { data: userData } = await supabase.auth.getUser();
     const isCreator = userData.user?.id === tournament.creator_id;
+
+    // Fetch matches with team details
+    const { data: matches } = await supabase
+        .from("matches")
+        .select(`
+            *,
+            team_a:teams!team_a_id(*),
+            team_b:teams!team_b_id(*)
+        `)
+        .eq("tournament_id", id)
+        .order("round_index", { ascending: false })
+        .order("match_index", { ascending: true });
+
+    const activeTab = tournament.status === 'OPEN' ? 'RULES' : 'TACTICAL';
 
     return (
         <div className="min-h-screen pt-32 pb-20 px-6">
@@ -61,14 +76,27 @@ export default async function TournamentDetailPage({ params }: PageProps) {
                             <StatCard icon={Trophy} label="Prize Pool" value={tournament.prize_pool || "$0"} />
                             <StatCard icon={Users} label="Enlisted" value={tournament.tournament_participants[0]?.count || 0} />
                             <StatCard icon={Calendar} label="Commencement" value={new Date(tournament.start_date).toLocaleDateString()} />
-                            <StatCard icon={Zap} label="Format" value="Double Elim" />
+                            <StatCard icon={Zap} label="Format" value="Single Elim" />
                         </div>
 
-                        <div className="space-y-6">
-                            <h3 className="text-xl font-black uppercase tracking-widest">Rules of Engagement</h3>
-                            <div className="glass-panel p-8 whitespace-pre-wrap text-muted-foreground leading-relaxed">
-                                {tournament.rules}
+                        {/* Tournament Tabs */}
+                        <div className="space-y-8">
+                            <div className="flex border-b border-border/20 gap-8">
+                                <button className={cn("pb-4 text-xs font-black uppercase tracking-widest border-b-2 transition-all", activeTab === 'RULES' ? "border-primary text-primary" : "border-transparent text-muted-foreground")}>Rules of Engagement</button>
+                                <button className={cn("pb-4 text-xs font-black uppercase tracking-widest border-b-2 transition-all", activeTab === 'TACTICAL' ? "border-primary text-primary" : "border-transparent text-muted-foreground")}>Tactical Bracket</button>
                             </div>
+
+                            {activeTab === 'RULES' ? (
+                                <div className="glass-panel p-8 whitespace-pre-wrap text-muted-foreground leading-relaxed">
+                                    {tournament.rules}
+                                </div>
+                            ) : (
+                                <BracketView
+                                    tournamentId={tournament.id}
+                                    matches={matches || []}
+                                    isCreator={isCreator}
+                                />
+                            )}
                         </div>
                     </div>
 
@@ -77,14 +105,27 @@ export default async function TournamentDetailPage({ params }: PageProps) {
                         <div className="glass-panel p-8 sticky top-40 border-foreground/20">
                             <h4 className="text-xs font-black uppercase tracking-[0.2em] mb-8 text-muted-foreground">Action Center</h4>
 
-                            <form action={async () => {
-                                "use server";
-                                await joinTournament(tournament.id);
-                            }}>
-                                <button className="w-full h-14 bg-foreground text-background font-black uppercase tracking-widest text-xs rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl mb-4">
-                                    Join Arena
-                                </button>
-                            </form>
+                            {tournament.status === 'OPEN' && (
+                                <form action={async () => {
+                                    "use server";
+                                    await joinTournament(tournament.id);
+                                }}>
+                                    <button className="w-full h-14 bg-foreground text-background font-black uppercase tracking-widest text-xs rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl mb-4">
+                                        Join Arena
+                                    </button>
+                                </form>
+                            )}
+
+                            {isCreator && tournament.status === 'OPEN' && (
+                                <form action={async () => {
+                                    "use server";
+                                    await startTournament(tournament.id);
+                                }}>
+                                    <button className="w-full h-14 bg-primary text-primary-foreground font-black uppercase tracking-widest text-xs rounded-full hover:scale-[1.02] active:scale-[0.98] transition-all shadow-2xl mb-4">
+                                        Launch Operation
+                                    </button>
+                                </form>
+                            )}
 
                             <button className="w-full h-14 bg-secondary border border-border text-foreground font-black uppercase tracking-widest text-xs rounded-full hover:bg-foreground/5 transition-all">
                                 Share Intel
@@ -97,16 +138,6 @@ export default async function TournamentDetailPage({ params }: PageProps) {
                                     </button>
                                 </div>
                             )}
-                        </div>
-
-                        <div className="p-6 border border-border rounded-2xl bg-foreground/5">
-                            <div className="flex items-center gap-3 mb-4">
-                                <Shield className="w-5 h-5 text-foreground/40" />
-                                <span className="text-[10px] font-black uppercase tracking-widest">Security Verified</span>
-                            </div>
-                            <p className="text-[10px] text-muted-foreground uppercase tracking-widest leading-loose">
-                                This arena is protected by Elite Anti-Cheat protocols. All participants must undergo verification.
-                            </p>
                         </div>
                     </div>
                 </div>

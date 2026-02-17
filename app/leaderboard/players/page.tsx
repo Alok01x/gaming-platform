@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { Trophy, Medal, Target, Zap, ChevronUp, ChevronDown } from "lucide-react";
 
 const RADIANT_LEADERS = [
-    { rank: 1, name: "GHOST_PRO", team: "NEON", kills: 1420, wins: 45, points: 12500, trend: 'up' },
-    { rank: 2, name: "XenonHunter", team: "VOID", kills: 1380, wins: 42, points: 11200, trend: 'up' },
-    { rank: 3, name: "ViperKing", team: "ETH", kills: 1250, wins: 38, points: 10800, trend: 'down' },
+    { rank: 1, name: "GHOST_PRO", team: "NEON", kills: 1420, wins: 45, points: 12500, trend: 'up', badges: ['MVP', 'S_TIER'] },
+    { rank: 2, name: "XenonHunter", team: "VOID", kills: 1380, wins: 42, points: 11200, trend: 'up', badges: ['SHARPSHOOTER'] },
+    { rank: 3, name: "ViperKing", team: "ETH", kills: 1250, wins: 38, points: 10800, trend: 'down', badges: ['TACTICIAN'] },
     { rank: 4, name: "Shadow01", team: "NEON", kills: 1100, wins: 35, points: 9500, trend: 'up' },
     { rank: 5, name: "MortalFlame", team: "TITAN", kills: 1050, wins: 32, points: 8900, trend: 'down' },
     { rank: 6, name: "CyberNinja", team: "RONIN", kills: 980, wins: 30, points: 8500, trend: 'up' },
@@ -77,7 +77,16 @@ export default function LeaderboardPage() {
                                                     {leader.name[0]}
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold uppercase text-sm tracking-tight">{leader.name}</div>
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="font-bold uppercase text-sm tracking-tight">{leader.name}</div>
+                                                        <div className="flex gap-1">
+                                                            {(leader as any).badges?.map((badge: string) => (
+                                                                <span key={badge} className="px-1.5 py-0.5 rounded bg-primary/20 text-primary text-[7px] font-black uppercase tracking-widest border border-primary/20">
+                                                                    {badge}
+                                                                </span>
+                                                            ))}
+                                                        </div>
+                                                    </div>
                                                     <div className="text-[10px] font-bold text-primary tracking-widest uppercase">[{leader.team}]</div>
                                                 </div>
                                             </div>

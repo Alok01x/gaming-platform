@@ -48,17 +48,12 @@ export function Hero() {
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.3 }}
-                        className="flex items-center gap-6"
                     >
-                        <button className="h-14 px-10 bg-foreground text-background font-black uppercase tracking-widest text-sm rounded-full hover:scale-105 transition-all shadow-2xl">
-                            Start Tournament
-                        </button>
-                        <button className="flex items-center gap-3 font-bold uppercase tracking-widest text-xs hover:text-primary transition-colors group">
-                            <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center group-hover:border-primary transition-colors">
-                                <Play className="w-4 h-4 fill-current ml-1" />
-                            </div>
-                            View Showcase
-                        </button>
+                        <Link href="/tournaments">
+                            <button className="h-16 px-12 bg-foreground text-background font-black uppercase tracking-widest text-sm rounded-full hover:scale-105 transition-all shadow-2xl flex items-center gap-3">
+                                Start Competing <ArrowRight className="w-5 h-5" />
+                            </button>
+                        </Link>
                     </motion.div>
                 </div>
 

@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 };
 
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { SignalProvider } from "@/app/providers/signal-provider";
+import { ToastProvider } from "@/components/providers/toast-provider";
 import { Background } from "@/components/layout/background";
 
 export default function RootLayout({
@@ -30,9 +32,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable} antialiased min-h-screen bg-background text-foreground transition-colors duration-500`}>
         <ThemeProvider>
-          <Background />
-          <Navbar />
-          {children}
+          <ToastProvider>
+            <SignalProvider>
+              <Background />
+              <Navbar />
+              {children}
+            </SignalProvider>
+          </ToastProvider>
         </ThemeProvider>
       </body>
     </html>

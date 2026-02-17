@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
-import { Trophy, Users, Star, Activity, BarChart3, Clock, Target, ShieldCheck, Map } from "lucide-react";
+import { Trophy, Users, Star, Activity, BarChart3, Clock, Target, ShieldCheck, Map, Radar } from "lucide-react";
 import Link from "next/link";
 import { PerformanceGraph, DataPoint } from "@/components/profile/performance-graph";
 import { cn } from "@/lib/utils";
@@ -137,6 +137,42 @@ export default async function PlayerDashboard() {
                             <h2 className="text-2xl font-black uppercase tracking-widest mb-10 flex items-center gap-4">
                                 <span className="w-8 h-px bg-foreground/20" /> Engagement Timeline
                             </h2>
+
+                            {/* Active Mission Status */}
+                            {activeEngagements.length > 0 && (
+                                <div className="mb-20 space-y-8">
+                                    <h2 className="text-sm font-black uppercase tracking-[0.3em] text-primary flex items-center gap-3">
+                                        <Radar className="w-4 h-4 animate-pulse" /> Active Mission Parameters
+                                    </h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        {activeEngagements.map((item: any, idx) => {
+                                            const t = Array.isArray(item.tournaments) ? item.tournaments[0] : item.tournaments;
+                                            return (
+                                                <Link key={idx} href={`/tournaments/${t?.id}`} className="group">
+                                                    <div className="glass-panel p-8 border-primary/20 bg-primary/5 hover:border-primary/50 transition-all relative overflow-hidden">
+                                                        <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                                                            <Target className="w-20 h-20" />
+                                                        </div>
+                                                        <div className="relative z-10">
+                                                            <div className="flex items-center gap-2 mb-4">
+                                                                <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                                                                <span className="text-[10px] font-black uppercase tracking-widest text-red-500">Live Operation</span>
+                                                            </div>
+                                                            <h3 className="text-2xl font-black uppercase tracking-tight mb-2 group-hover:text-primary transition-colors">{t?.title}</h3>
+                                                            <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-[0.2em] mb-6">Status: {t?.status} | Rounds Clear: {item.placement || 0}</p>
+
+                                                            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-primary">
+                                                                Re-Engage Area <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </Link>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="space-y-4">
                                 {tournamentHistory && tournamentHistory.length > 0 ? (
                                     tournamentHistory.map((item: any, idx) => {

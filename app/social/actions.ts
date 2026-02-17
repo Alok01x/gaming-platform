@@ -38,7 +38,19 @@ export async function acceptFriendRequest(friendshipId: string) {
     const supabase = await createClient();
     const { error } = await supabase
         .from("friendships")
-        .update({ status: 'ACCEPTED' })
+        .update({ status: 'ACCEPTED', updated_at: new Date().toISOString() })
+        .eq("id", friendshipId);
+
+    if (error) throw new Error(error.message);
+    revalidatePath("/chat");
+    return { success: true };
+}
+
+export async function declineFriendRequest(friendshipId: string) {
+    const supabase = await createClient();
+    const { error } = await supabase
+        .from("friendships")
+        .delete()
         .eq("id", friendshipId);
 
     if (error) throw new Error(error.message);
@@ -51,15 +63,11 @@ export async function createDMChannel(targetUserId: string) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error("Unauthorized");
 
-    // Check if DM channel already exists between these two
-    // This is complex in SQL, for now let's just create a new one or simplistic check
-    // Realistically we should query channel_members intersection.
-
     // 1. Create Channel
     const { data: channel, error: cError } = await supabase
         .from("channels")
         .insert({
-            name: `dm-${user.id.slice(0, 4)}-${targetUserId.slice(0, 4)}-${Date.now()}`, // Temporary unique name
+            name: `dm-${user.id.slice(0, 4)}-${targetUserId.slice(0, 4)}`,
             type: 'TEXT',
             category: 'DM',
             description: 'Direct Encrypted Link'
@@ -79,5 +87,6 @@ export async function createDMChannel(targetUserId: string) {
 
     if (mError) throw new Error(mError.message);
 
+    revalidatePath("/chat");
     return { channelId: channel.id };
 }

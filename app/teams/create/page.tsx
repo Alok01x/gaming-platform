@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { logActivity } from "@/lib/intelligence/actions";
 
 export default function CreateTeamPage() {
     const [loading, setLoading] = useState(false);
@@ -51,7 +52,10 @@ export default function CreateTeamPage() {
 
             if (memberError) throw memberError;
 
-            // 3. Redirect to Team Hub
+            // 3. Log Activity
+            await logActivity('TEAM_CREATED', `New Squad Formed: ${name} [${tag}]`, { team_id: team.id });
+
+            // 4. Redirect to Team Hub
             router.push(`/teams/${team.id}`);
 
         } catch (error: any) {

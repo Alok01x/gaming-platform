@@ -15,28 +15,36 @@ export default function ChatStream({ channelId }: { channelId: string }) {
     const supabase = createClient();
 
     useEffect(() => {
-        if (!channelId) return;
+        if (!channelId) {
+            setLoading(false);
+            return;
+        }
 
         setLoading(true);
         const fetchMessages = async () => {
-            const { data } = await supabase
-                .from("messages")
-                .select(`
-                    *,
-                    profiles (
-                        gamertag,
-                        avatar_url,
-                        role,
-                        tactical_id
-                    )
-                `)
-                .eq("channel_id", channelId)
-                .order("created_at", { ascending: true })
-                .limit(50);
+            try {
+                const { data } = await supabase
+                    .from("messages")
+                    .select(`
+                        *,
+                        profiles (
+                            gamertag,
+                            avatar_url,
+                            role,
+                            tactical_id
+                        )
+                    `)
+                    .eq("channel_id", channelId)
+                    .order("created_at", { ascending: true })
+                    .limit(50);
 
-            if (data) setMessages(data);
-            setLoading(false);
-            scrollToBottom();
+                if (data) setMessages(data);
+            } catch (err) {
+                console.error("ChatStream: Fetch error:", err);
+            } finally {
+                setLoading(false);
+                scrollToBottom();
+            }
         };
 
         fetchMessages();
