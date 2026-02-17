@@ -6,19 +6,17 @@ export function createClient() {
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co'
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNoZWhvbGRlciIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNjcyNTMxMjAwLCJleHAiOjE5ODgxMDcyMDB9.placeholder'
 
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-        if (process.env.NODE_ENV === 'production') {
-            console.warn('CRITICAL: Supabase environment variables are missing in production build. Ensure they are set in Vercel settings.')
-        } else {
-            console.warn('Supabase credentials missing. using placeholders for stability.')
-        }
+    // Hard-fail on client if placeholders are detected in production to prevent "Invalid API Key" confusion
+    const isPlaceholder = supabaseUrl.includes('placeholder') || supabaseKey.includes('placeholder')
+
+    if (isPlaceholder && process.env.NODE_ENV === 'production') {
+        throw new Error('CRITICAL ERROR: Supabase is initialized with placeholder keys. TRIGGER A REDEPLOY ON VERCEL.')
     }
 
     try {
         return createBrowserClient(supabaseUrl, supabaseKey)
     } catch (e) {
         console.error('Failed to initialize Supabase client:', e)
-        // Return a dummy client if initialization fails during build
         return {} as any
     }
 }
