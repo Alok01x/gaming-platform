@@ -51,7 +51,7 @@ export function Hero() {
                     >
                         <Link href="/tournaments">
                             <button className="h-16 px-12 bg-foreground text-background font-black uppercase tracking-widest text-sm rounded-full hover:scale-105 transition-all shadow-2xl flex items-center gap-3">
-                                Start Competing <ArrowRight className="w-5 h-5" />
+                                START COMPETING <ArrowRight className="w-5 h-5" />
                             </button>
                         </Link>
                     </motion.div>

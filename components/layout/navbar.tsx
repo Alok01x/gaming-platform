@@ -61,10 +61,13 @@ export function Navbar() {
                 )}
             >
                 {/* Logo */}
-                <Link href="/home" className="flex items-center gap-2 px-3">
+                <Link href="/home" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                     <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                        <Trophy className="w-4 h-4 text-primary-foreground" />
+                        <Trophy className="w-4 h-4 text-white" />
                     </div>
+                    <span className="font-heading font-black tracking-tighter text-lg uppercase hidden sm:block">
+                        Gamer<span className="text-primary italic">NotFound</span>
+                    </span>
                 </Link>
 
                 {/* Desktop Menu */}
