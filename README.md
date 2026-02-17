@@ -1,4 +1,4 @@
-# Elite Arena Orchestration
+# GamerNotFound Orchestration
 
 ## Local Deployment Security
 To ensure a smooth onboarding for new operatives during local development, you must calibrate your Supabase authentication settings:

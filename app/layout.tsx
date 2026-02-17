@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Elite Arena | Scale & Dominance",
+  title: "GamerNotFound | Scale & Dominance",
   description: "Advanced esports tournament orchestration and talent discovery.",
 };
 

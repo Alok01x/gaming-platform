@@ -14,7 +14,7 @@ export function Footer() {
                                 <Trophy className="w-6 h-6 text-primary" />
                             </div>
                             <span className="font-heading font-bold text-xl tracking-tighter uppercase italic">
-                                Elite<span className="text-primary italic-none tracking-normal ml-1">Arena</span>
+                                Gamer<span className="text-primary italic-none tracking-normal ml-1">NotFound</span>
                             </span>
                         </Link>
                         <p className="text-muted-foreground text-sm leading-relaxed mb-6">
@@ -51,7 +51,7 @@ export function Footer() {
                         <div className="flex gap-2">
                             <input
                                 type="email"
-                                placeholder="commander@elite.com"
+                                placeholder="commander@gamerfound.com"
                                 className="bg-secondary border border-border rounded-sm px-4 py-2 text-xs w-full focus:outline-none focus:border-primary/50 transition-colors"
                             />
                             <button className="bg-primary text-primary-foreground p-2 rounded-sm hover:translate-x-1 hover:-translate-y-1 transition-transform shadow-[2px_2px_0px_#0891b2] active:translate-x-0 active:translate-y-0 active:shadow-none">
@@ -62,7 +62,7 @@ export function Footer() {
                 </div>
 
                 <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-border/50 text-[10px] font-bold uppercase tracking-widest text-muted-foreground gap-4">
-                    <p>© 2024 ELITE ARENA ORCHESTRATION. ALL RIGHTS RESERVED.</p>
+                    <p>© 2024 GAMERNOTFOUND ORCHESTRATION. ALL RIGHTS RESERVED.</p>
                     <div className="flex gap-8">
                         <Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link>
                         <Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link>

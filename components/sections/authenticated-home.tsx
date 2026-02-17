@@ -50,7 +50,7 @@ export async function AuthenticatedHome() {
                             Built for <span className="text-primary italic">Champions</span>
                         </h2>
                         <p className="text-muted-foreground max-w-2xl mx-auto">
-                            Elite Arena provides the professional-grade tools required to run, track, and win high-performance esports events at scale.
+                            GamerNotFound provides the professional-grade tools required to run, track, and win high-performance esports events at scale.
                         </p>
                     </div>
 
